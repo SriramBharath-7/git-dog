@@ -1,0 +1,14 @@
+[package]
+name = "git-dog"
+version = "0.1.0"
+edition = "2021"
+description = "An original pixel-art GitHub coding companion"
+license = "MIT"
+
+[dependencies]
+gif = "0.13"
+png = "0.17"
+
+[profile.release]
+lto = true
+strip = true
