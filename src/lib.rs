@@ -25,7 +25,7 @@ pub struct Canvas { rgba: Vec<u8> }
 impl Canvas {
     fn new() -> Self {
         let mut rgba = vec![0; WIDTH * HEIGHT * 4];
-        for pixel in rgba.chunks_exact_mut(4) { pixel.copy_from_slice(&c(24, 28, 44)); }
+        for pixel in rgba.chunks_mut(4) { pixel.copy_from_slice(&c(24, 28, 44)); }
         Self { rgba }
     }
     pub fn bytes(&self) -> &[u8] { &self.rgba }
@@ -117,7 +117,7 @@ fn background(p: &mut Canvas, phase: usize) {
         }
     }
     for i in 0..9 {
-        if i % 3 == phase % 3 { p.rect((i * 31 + 5) as i32, (i * 9 + 13) as i32, 2, 2, c(93, 86, 123)); }
+        if i % 3 == phase % 3 { p.rect(i * 31 + 5, i * 9 + 13, 2, 2, c(93, 86, 123)); }
     }
     for x in (3..91).step_by(11) {
         p.rect(x, 15, 3, 13, GRASS_DARK);
@@ -283,7 +283,7 @@ mod tests {
     fn dimensions_and_opacity() {
         let image = render(0,24,Mood::Playful);
         assert_eq!(image.bytes().len(), WIDTH*HEIGHT*4);
-        assert!(image.bytes().chunks_exact(4).all(|p|p[3]==255));
+        assert!(image.bytes().chunks(4).all(|p|p[3]==255));
     }
     #[test]
     fn animated() {
