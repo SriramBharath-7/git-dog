@@ -151,7 +151,6 @@ fn ground(p: &mut Canvas) {
     p.rect(0, 112, 256, 11, GRASS);
     p.rect(0, 112, 256, 3, GRASS_LIGHT);
     for x in (3..254).step_by(9) {
-        let x = x as i32;
         p.rect(x, 107 + x % 4, 3, 5, GRASS);
         p.rect(x + 2, 105 + x % 3, 2, 6, GRASS_LIGHT);
     }
