@@ -1,0 +1,38 @@
+name: Rust build and pixel puppy preview
+
+on:
+  push:
+    branches:
+      - main
+      - "feat/**"
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  test-and-render:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: dtolnay/rust-toolchain@stable
+        with:
+          components: rustfmt, clippy
+      - uses: Swatinem/rust-cache@v2
+      - name: Format Rust sources
+        run: cargo fmt --all
+      - name: Lint all targets
+        run: cargo clippy --all-targets -- -D warnings
+      - name: Run unit tests
+        run: cargo test
+      - name: Render animated puppy GIF and still PNG
+        run: cargo run --release -- --output dist/git-dog.gif --png dist/git-dog.png --mood playful --frames 24 --scale 3
+      - name: Upload Git Dog preview
+        uses: actions/upload-artifact@v4
+        with:
+          name: git-dog-preview
+          path: |
+            dist/git-dog.gif
+            dist/git-dog.png
+          if-no-files-found: error
