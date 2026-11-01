@@ -117,7 +117,7 @@ fn background(p: &mut Canvas, phase: usize) {
         }
     }
     for i in 0..9 {
-        if i % 3 == phase % 3 { p.rect(i * 31 + 5, i * 9 + 13, 2, 2, c(93, 86, 123)); }
+        if i % 3 == phase % 3 { p.rect((i as i32) * 31 + 5, (i as i32) * 9 + 13, 2, 2, c(93, 86, 123)); }
     }
     for x in (3..91).step_by(11) {
         p.rect(x, 15, 3, 13, GRASS_DARK);
